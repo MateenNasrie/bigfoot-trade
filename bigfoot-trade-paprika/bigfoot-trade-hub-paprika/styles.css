@@ -72,7 +72,9 @@ h1,h2,h3{font-family:var(--display);line-height:1.02;margin:0;letter-spacing:-.0
 .f2{right:-1.5%;top:42%;width:clamp(56px,7vw,100px);animation:bob 7s ease-in-out -2s infinite}
 .f3{left:20%;bottom:-6%;width:clamp(54px,6.5vw,92px);animation:bob 5.5s ease-in-out -1s infinite}
 .badge{position:absolute;right:4%;bottom:-9%;width:clamp(110px,13vw,170px);aspect-ratio:1;border-radius:50%;background:var(--badge-bg);color:var(--badge-fg);display:grid;place-items:center;z-index:3;box-shadow:0 12px 30px rgba(0,0,0,.35)}
-.badge svg{position:absolute;inset:0;width:100%;height:100%;animation:spin 18s linear infinite}
+.badge .ring{position:absolute;inset:0;width:100%;height:100%;animation:spin 18s linear infinite}
+.badge-ico{position:relative;width:40%;aspect-ratio:1;color:var(--badge-mark);display:grid}
+.badge-ico svg{width:100%;height:100%}
 .badge text{font:700 15.5px var(--display);letter-spacing:.12em;fill:currentColor}
 .badge b{font:900 clamp(1.1rem,2vw,1.7rem) var(--display);color:var(--badge-mark)}
 .hero-foot{display:flex;justify-content:space-between;align-items:end;gap:24px;flex-wrap:wrap;padding:clamp(50px,7vw,90px) 0 clamp(40px,5vw,64px);position:relative}
@@ -243,6 +245,20 @@ dialog.pd::backdrop{background:rgba(10,8,6,.65);backdrop-filter:blur(4px)}
 .story p{margin:0 0 16px}
 .quote{font:800 clamp(1.4rem,2.6vw,2.2rem)/1.15 var(--display);color:var(--head);margin:0 0 26px}
 
+/* ---------- trust (handshake photo) ---------- */
+.trust{position:relative;min-height:clamp(440px,56vw,720px);display:flex;align-items:center;overflow:hidden;background:var(--trust-bg);color:#fff}
+.trust-img{position:absolute;left:0;top:-8%;width:100%;height:116%;object-fit:cover;object-position:center;transform:translateY(var(--ty,0px))}
+.trust-shade{position:absolute;inset:0;background:var(--trust-shade)}
+.trust-in{position:relative;z-index:1;padding:clamp(70px,8vw,120px) 0}
+.trust-quote{font:700 clamp(2rem,4.6vw,4.2rem)/1.04 var(--display);letter-spacing:-.02em;max-width:15ch;margin:0 0 22px;color:var(--trust-head)}
+.trust-text{max-width:46ch;margin:0;font-size:clamp(1rem,1.25vw,1.15rem);color:rgba(255,255,255,.86)}
+.trust-points{list-style:none;display:flex;flex-wrap:wrap;gap:10px;padding:0;margin:28px 0 0}
+.trust-points li{border:1.5px solid rgba(255,255,255,.35);border-radius:999px;padding:8px 16px;font-weight:600;font-size:.92rem;background:rgba(0,0,0,.22);backdrop-filter:blur(6px)}
+@media (max-width:700px){
+  .trust{align-items:flex-end;min-height:600px}
+  .trust-shade{background:linear-gradient(0deg,rgba(0,0,0,.88) 0%,rgba(0,0,0,.6) 55%,rgba(0,0,0,.1) 100%)}
+}
+
 /* ---------- CTA band ---------- */
 .cta{padding:clamp(60px,7vw,100px) 0;text-align:center;overflow:hidden}
 .cta .mega{font-size:clamp(2.2rem,6.4vw,5.6rem)}
@@ -341,8 +357,16 @@ dialog.pd::backdrop{background:rgba(10,8,6,.65);backdrop-filter:blur(4px)}
   .js .reveal{opacity:1;transform:none}
 }
 
+/* real spice photos (img.sp): round crops, no spin */
+img.sp{border-radius:50%;object-fit:cover;background:#fff}
+.float img.sp{animation:none}
+.bowl-card img.sp,.item img.sp{box-shadow:0 10px 18px rgba(0,0,0,.22);filter:none}
+a.bowl-card:hover img.sp,.item:hover img.sp{transform:scale(1.07)}
+.pd-img img.sp{animation:none;filter:none;border-radius:18px;aspect-ratio:1;box-shadow:0 14px 24px rgba(0,0,0,.25)}
+.mini-shelf .bowl-card img.sp{width:54px;height:54px}
+
 /* ===== theme: paprika ===== */
-body{--page-bg:#fbf3e3;--focus:#ffd35c;
+body{--trust-shade:linear-gradient(90deg,rgba(34,14,6,.88) 0%,rgba(34,14,6,.6) 45%,rgba(34,14,6,.1) 100%);--trust-head:#ffd35c;--trust-bg:#22170f;--hs-a:#ffd35c;--hs-b:#c9461f;--hs-cuff-a:#fff;--hs-cuff-b:#fff;--hs-spark:#ffd35c;--page-bg:#fbf3e3;--focus:#ffd35c;
  --hdr-fg:#ffd35c;--hdr-bg:rgba(201,70,31,.97);--hdr-line:rgba(255,211,92,.5);--hdr-accent:#ffd35c;--menu-bg:#c9461f;
  --btn-bg:#ffd35c;--btn-fg:#22170f;--btn-hover:#fff;--btn-hover-fg:#22170f;
  --badge-bg:#ffd35c;--badge-fg:#22170f;--badge-mark:#c9461f;

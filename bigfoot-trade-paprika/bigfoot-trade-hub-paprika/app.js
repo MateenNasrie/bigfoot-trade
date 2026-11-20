@@ -6,6 +6,13 @@
   var $ = function (s, c) { return (c || document).querySelector(s); };
   var $$ = function (s, c) { return Array.prototype.slice.call((c || document).querySelectorAll(s)); };
 
+  /* ---- hide images that fail to load (e.g. offline) ---- */
+  $$("img[data-hide-on-error]").forEach(function (im) {
+    var hide = function () { im.style.display = "none"; };
+    im.addEventListener("error", hide);
+    if (im.complete && im.naturalWidth === 0 && im.getAttribute("loading") !== "lazy") hide();
+  });
+
   /* ---- header + menu ---- */
   var top = $("[data-top]"), btn = $(".menu-btn");
   function onScroll() { top.classList.toggle("scrolled", window.scrollY > 40); }
@@ -52,6 +59,19 @@
       if (r.bottom < 0 || r.top > vh) return;
       var q = Math.max(-1, Math.min(1, (r.top + r.height / 2 - vh / 2) / vh));
       imgs.forEach(function (im, i) { im.style.setProperty("--py", (-8.3 + q * (i ? -8 : 8)) + "%"); });
+    };
+    window.addEventListener("scroll", par, { passive: true }); par();
+  });
+
+  /* ---- trust photo drift ---- */
+  $$(".trust").forEach(function (sec) {
+    if (reduce) return;
+    var im = $(".trust-img", sec);
+    var par = function () {
+      var r = sec.getBoundingClientRect(), vh = window.innerHeight;
+      if (r.bottom < 0 || r.top > vh) return;
+      var q = Math.max(-1, Math.min(1, (r.top + r.height / 2 - vh / 2) / vh));
+      im.style.setProperty("--ty", (q * 40) + "px");
     };
     window.addEventListener("scroll", par, { passive: true }); par();
   });
@@ -109,7 +129,7 @@
     var dlg = $("[data-pd]"), current = null;
     var open = function (it) {
       current = it;
-      $("[data-pd-img]", dlg).src = $("img", it).src;
+      { const pi = $("[data-pd-img]", dlg), si = $("img", it); pi.className = si.className; pi.src = si.src; }
       $("[data-pd-cat]", dlg).textContent = it.dataset.cat;
       $("[data-pd-name]", dlg).textContent = it.dataset.name;
       $("[data-pd-short]", dlg).textContent = it.dataset.short;
